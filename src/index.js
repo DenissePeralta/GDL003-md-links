@@ -25,7 +25,13 @@ const readFile = (filePath) => {
 };
 const readFileResult = readFile("../README.md");
 
-
+//Function to find the links into the data with the regExp
+const findLinks = (data) => {
+  let linksFound = data.match(searchLinksRegExp);
+  let linksFoundCount = "We found: " + linksFound.length + " links";
+  console.log(linksFoundCount, linksFound);
+};
+const findLinksResult = findLinks(readFileResult);
 
 //Adding properties to the mdLinks object and exporting it with module.exports
 mdLinks.checkExtensionFile = checkExtensionFile;
