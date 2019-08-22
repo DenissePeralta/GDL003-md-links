@@ -1,4 +1,20 @@
 {
   "name": "md-links",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "description": "Library to review the links into a markdown file",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "keywords": [
+    "review",
+    "check",
+    "markdown",
+    ".md"
+  ],
+  "author": "Denisse Peralta",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^24.9.0"
+  }
 }
