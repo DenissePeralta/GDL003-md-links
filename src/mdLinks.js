@@ -25,9 +25,9 @@ const readFile = () => {
 };
 readFile();
 
-//let searchLinksDescription = /\[..+\]\(http..+?\)/gmi;
+//let searchLinksDescription = /(?<=\[).+?(?=\]\()/gmi;
 
-let searchLinksFile = /\(http..+?\)/gmi;
+let searchLinksFile = /(?<=\()http.+?(?=\))/gmi;
 const readFile = (filePath) => {
   fs.readFile(filePath, "utf8", function (error, data){
     if (data) {
