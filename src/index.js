@@ -9,7 +9,7 @@ let searchLinksRegExp = /(?<=\()http.+?(?=\))/gmi;
 const checkExtensionFile = (filePath) => path.extname(filePath) === ".md" ? true : "It is not a .md file";
 const checkExtFileResult = (checkExtensionFile("../README.md"));
 
-//Function to get the directory path name
+//Function to read the directory path and get the files list
 const readFileDir = (filePath) => dataFileDir = fs.readdirSync(filePath, "utf8");
 const readFileDirResult = readFileDir("/Users/Everybody/Documents/Laboratoria/GDL003-md-links");
 console.log(readFileDirResult);
@@ -18,12 +18,12 @@ console.log(readFileDirResult);
 const readFile = (filePath) => dataFile = fs.readFileSync(filePath, "utf8");
 const readFileResult = readFile("../README.md");
 
-//Function to find the links into the data with the regExp
+//Function to find the links into the data with the regExp searchLinksRegExp
 const findLinks = (data) => linksFound = data.match(searchLinksRegExp);
 const findLinksResult = findLinks(readFileResult);
 console.log(findLinksResult);
 
-//Function to count the links into the read data
+//Function to count the links found
 const countLinks = (data) => linksFoundCount = "We found a total of: " + data.length + " links";
 const countLinksResult = countLinks(findLinksResult);
 console.log(countLinksResult);

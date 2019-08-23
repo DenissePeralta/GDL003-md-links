@@ -1,4 +1,4 @@
-//const mdLinks = require('./index.js');
+//const mdLinks = require("./index.js");
 
 //Functions calling - adding values
 //console.log(mdLinks.checkExtensionFile("../README.md"));
