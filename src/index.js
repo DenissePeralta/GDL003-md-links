@@ -1,7 +1,7 @@
-
 const path = require("path");
 const fs = require("fs");
 const http = require("http");
+const fetch = require("node-fetch");
 const mdLinks = {};
 let searchLinksRegExp = /(?<=\()http.+?(?=\))/gmi;
 
@@ -28,8 +28,22 @@ const countLinks = (data) => linksFoundCount = "We found a total of: " + data.le
 const countLinksResult = countLinks(findLinksResult);
 console.log(countLinksResult);
 
+//Function to validate the links
+const validateLinks = (url) => {
+  let linkStatus;
+  fetch(url).then((response) => {
+    linkStatus = url + " " + response.statusText + " " + response.status;
+    console.log(linkStatus);
+  }).catch((error) => {
+    linkStatusError = url + " Fail 404";
+    console.log(linkStatusError);
+  });
+};
+const validateLinksResult = validateLinks("https://nodejs.og/es/");
+
 //Adding properties to the mdLinks object and exporting it with module.exports
 mdLinks.checkExtensionFile = checkExtensionFile;
+mdLinks.readFileDir = readFileDir;
 mdLinks.readFile = readFile;
 mdLinks.findLinks = findLinks;
 mdLinks.countLinks = countLinks;

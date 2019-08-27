@@ -8,8 +8,8 @@ describe("checkExtensionFile", () => {
 });
 //Test for readFileDir function
 describe("readFileDir", () => {
-  it("should return an object with the file list found in the directory", () => {
-    expect(typeof mdLinks.findLinks("/Users/Everybody/Documents/Laboratoria/GDL003-md-links")).toEqual("object");
+  it("should return an array/object with the files list found in the directory", () => {
+    expect(typeof mdLinks.readFileDir("/Users/Everybody/Documents/Laboratoria/GDL003-md-links")).toEqual("object");
   });
 });
 //Test for readFile function
@@ -20,7 +20,7 @@ describe("readFile", () => {
 });
 //Test for findLinks function
 describe("findLinks", () => {
-  it("should return an object with the links found", () => {
+  it("should return an array/object with the links found", () => {
     expect(typeof mdLinks.findLinks("../README.md")).toEqual("object");
   });
 });

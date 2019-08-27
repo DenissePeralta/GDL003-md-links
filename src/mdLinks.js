@@ -56,4 +56,19 @@ const readFile = (filePath) => {
 };
 readFile("../README.md");
 
+
+
+//Function to validate the links
+const validateLinks = (url) => {
+  let linkStatus;
+  fetch(url).then((response) => {
+    linkStatus = url + " " + response.statusText + " " + response.status;
+    console.log(linkStatus);
+  }).catch((error) => {
+    linkStatusError = url + " Fail 404";
+    console.log(linkStatusError);
+  });
+};
+const validateLinksResult = validateLinks("https://nodejs.og/es/");
+
 */
