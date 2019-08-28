@@ -1,9 +1,9 @@
 const mdLinks = require("../src/index.js");
 
-//Test for checkExtensionFile function
-describe("checkExtensionFile", () => {
+//Test for checkExtension function
+describe("checkExtension", () => {
   it("should return true for a valid .md file", () => {
-    expect(mdLinks.checkExtensionFile("../README.md")).toBe(true);
+    expect(mdLinks.checkExtension("../README.md")).toBe(true);
   });
 });
 //Test for readFileDir function
