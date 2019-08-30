@@ -65,9 +65,13 @@ const validateLinks = (url) => {
         let validatePaths = filePathArg + " ";
         let validateUrls = url + " ";
         let validateMessage =  response.statusText + " " + response.status;
-        console.log(validatePaths.white, validateUrls.cyan, validateMessage.green);
+        if (response.status === 200) {
+          console.log(validatePaths.white, validateUrls.cyan, validateMessage.green);
+        } else {
+          console.log(validatePaths.white, validateUrls.cyan, validateMessage.red);
+        }
       }).catch((error) => {
-        console.log(filePathArg + " " + url + " Fail 404");
+        console.log("An error ocurred");
       });
     });
   } else {

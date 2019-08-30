@@ -2,7 +2,7 @@ const mdLinks = require("../src/md-links.js");
 
 //Test for checkFileExists function
 describe("checkFileExists", () => {
-  it("should return the file path (../README.md) if the file does exists", () => {
+  it("should return the file path (./README.md) if the file does exists", () => {
     expect(mdLinks.checkFileExists("./README.md")).toEqual("./README.md");
   });
 });
@@ -10,6 +10,12 @@ describe("checkFileExists", () => {
 describe("checkExtension", () => {
   it("should return the message -It is not a Markdown (.md) file- if a different extension is given", () => {
     expect(mdLinks.checkExtension("./index.js")).toEqual("It is not a Markdown (.md) file");
+  });
+});
+//Test for checkExtensionFile function
+describe("checkExtensionFile", () => {
+  it("should return the message -It is not a Markdown (.md) file- if a different extension is given", () => {
+    expect(mdLinks.checkExtensionFile(mdLinks.checkExtension("./index.js"))).toEqual("It is not a Markdown (.md) file");
   });
 });
 //Test for readFileDir function
@@ -24,6 +30,12 @@ describe("readFile", () => {
     expect(typeof mdLinks.readFile("./README.md")).toBe("string");
   });
 });
+//Test for readMdFiles function
+describe("readMdFiles", () => {
+  it("should return a string of the read data", () => {
+    expect(typeof mdLinks.readMdFiles(mdLinks.readFile("./README.md"))).toBe("string");
+  });
+});
 //Test for findLinks function
 describe("findLinks", () => {
   it("should return an array/object with the links list found", () => {
@@ -34,5 +46,11 @@ describe("findLinks", () => {
 describe("countLinks", () => {
   it("should return a string with the total amount of links found", () => {
     expect(typeof mdLinks.countLinks("./README.md")).toBe("string");
+  });
+});
+//Test for findLinksInMdFile function/received null
+describe("findLinksInMdFile", () => {
+  it("should return an array/object with the links list found", () => {
+    expect(typeof mdLinks.findLinksInMdFile(mdLinks.findLinks(mdLinks.readMdFiles(mdLinks.readFile("./README.md"))))).toEqual("object");
   });
 });
