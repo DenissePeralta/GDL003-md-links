@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const process = require('process');
 const fetch = require("node-fetch");
+const colors = require('colors');
 const mdLinks = {};
 let searchLinksRegExp = /(?<=\()http.+?(?=\))/gmi;
 const filePathArg = process.argv[2];
@@ -17,17 +18,6 @@ const checkFileExists = (filePath) => {
 };
 const checkFileExistsResult = checkFileExists(filePathArg);
 
-//Function to validate if the directory (filePath) given exists
-const checkDirExists = (filePath) => {
-  try {
-    fs.statSync(filePath).isDirectory();
-    return filePath;
-  } catch (error) {
-    return "The directory does not exists, please check the information given";
-  }
-};
-const checkDirExistsResult = checkDirExists(filePathArg);
-
 //Function to check the extension
 const checkExtension = (filePath) => path.extname(filePath) === ".md" ? filePath : "It is not a Markdown (.md) file";
 
@@ -36,55 +26,58 @@ const checkExtensionFile = (filePath) => checkFileExistsResult === filePathArg ?
 const checkExtFileResult = checkExtensionFile(checkFileExistsResult);
 
 //Function to read the directory path and get the files list
-const readFileDir = (filePath) => dataFileDir = fs.readdirSync(filePath, "utf8");
+const readFileDir = (filePath) => fs.readdirSync(filePath, "utf8");
 
 //Function to read a file
-const readFile = (filePath) => dataFile = fs.readFileSync(filePath, "utf8");
+const readFile = (filePath) => fs.readFileSync(filePath, "utf8");
 
 //Function to only read a .md file and saving the data in a const
 const readMdFiles = (filePath) => checkExtFileResult === filePathArg ? readFile(filePath) : filePath;
 const readMdFilesResult = readMdFiles(checkExtFileResult);
 
 //Function to find the links with the regExp searchLinksRegExp
-const findLinks = (data) => checkExtFileResult === filePathArg ? data.match(searchLinksRegExp) : data;
+const findLinks = (data) => data.match(searchLinksRegExp);
 
 //Function to count links
-const countLinks = (data) => linksFoundCount = "We found a total of: " + data.length + " links";
+const countLinks = (data) => "We found a total of: " + data.length + " links";
 
 //Function to find the links inside the markdown file with findLinks function
 const findLinksInMdFile = (data) => {
   if (checkExtFileResult === filePathArg && findLinks(data) !== null) {
     return findLinks(data);
-  } else if (findLinks(data) === null) {
+  } else if (checkExtFileResult === filePathArg && findLinks(data) === null) {
     return "The file does not content any links to validate";
   } else {
     return data;
   }
 };
 const findLinksInMdFileResult = findLinksInMdFile(readMdFilesResult);
-console.log(findLinksInMdFileResult);
 
 //Function to count the total amount of links found
-const countLinksFound = (data) => typeof data === "object" ? countLinks(data) : "0 links found";
+const countLinksFound = (data) => typeof data === "object" ? console.log(countLinks(data)) : data;
 const countLinksFoundResult = countLinksFound(findLinksInMdFileResult);
-console.log(countLinksFoundResult);
 
 //Function to validate the links
 const validateLinks = (url) => {
-  let linkStatus;
-  fetch(url).then((response) => {
-    linkStatus = url + " " + response.statusText + " " + response.status;
-    console.log(linkStatus);
-  }).catch((error) => {
-    linkStatusError = url + " Fail 404";
-    console.log(linkStatusError);
-  });
+  if (typeof url === "object") {
+    findLinksInMdFileResult.forEach(function (url){
+      fetch(url).then((response) => {
+        let validatePaths = filePathArg + " ";
+        let validateUrls = url + " ";
+        let validateMessage =  response.statusText + " " + response.status;
+        console.log(validatePaths.white, validateUrls.cyan, validateMessage.green);
+      }).catch((error) => {
+        console.log(filePathArg + " " + url + " Fail 404");
+      });
+    });
+  } else {
+    console.log(url);
+  }
 };
-const validateLinksResult = validateLinks("https://nodejs.org/es/");
+const validateLinksResult = validateLinks(findLinksInMdFileResult);
 
 //Adding properties to the mdLinks object and exporting it with module.exports
 mdLinks.checkFileExists = checkFileExists;
-mdLinks.checkDirExists = checkDirExists;
 mdLinks.checkExtension = checkExtension;
 mdLinks.checkExtensionFile = checkExtensionFile;
 mdLinks.readFileDir = readFileDir;
