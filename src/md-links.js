@@ -13,13 +13,13 @@ const checkFileExists = (filePath) => {
     fs.statSync(filePath).isFile();
     return filePath;
   } catch (error) {
-    return "The file does not exists, please check the information given";
+    return "The file does not exists, please check the information given".red;
   }
 };
 const checkFileExistsResult = checkFileExists(filePathArg);
 
 //Function to check the extension
-const checkExtension = (filePath) => path.extname(filePath) === ".md" ? filePath : "It is not a Markdown (.md) file";
+const checkExtension = (filePath) => path.extname(filePath) === ".md" ? filePath : "It is not a Markdown (.md) file".red;
 
 //Function to check the extension of an existing file, should be .md
 const checkExtensionFile = (filePath) => checkFileExistsResult === filePathArg ? checkExtension(filePath) : filePath;
@@ -91,4 +91,5 @@ mdLinks.findLinks = findLinks;
 mdLinks.countLinks = countLinks;
 mdLinks.findLinksInMdFile = findLinksInMdFile;
 mdLinks.countLinksFound = countLinksFound;
+mdLinks.validateLinks = validateLinks;
 module.exports = mdLinks;
